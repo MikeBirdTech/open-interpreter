@@ -5,8 +5,6 @@ import string
 
 from html2image import Html2Image
 
-from ....terminal_interface.utils.local_storage_path import get_storage_path
-
 
 def html_to_png_base64(code):
     # Convert the HTML into an image using html2image
@@ -14,7 +12,7 @@ def html_to_png_base64(code):
 
     # Generate a random filename for the temporary image
     temp_filename = "".join(random.choices(string.digits, k=10)) + ".png"
-    hti.output_path = get_storage_path()
+
     hti.screenshot(
         html_str=code,
         save_as=temp_filename,
@@ -22,7 +20,7 @@ def html_to_png_base64(code):
     )
 
     # Get the full path of the temporary image file
-    file_location = os.path.join(get_storage_path(), temp_filename)
+    file_location = os.path.join(hti.output_path, temp_filename)
 
     # Convert the image to base64
     with open(file_location, "rb") as image_file:
